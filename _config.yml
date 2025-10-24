@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "zh-CN"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Yang Shi 学术主页" # Site title
+title                    : "石飏学术主页" # Site title
 title_separator          : "-"
-name                     : &name "Yang Shi"                     # Your name, used in the author profile and the site footer
-description              : &description "Yang Shi 的学术作品集"   # Update this with a general description of your site, this is the default if not overridden by a page
+name                     : &name "石飏"                     # Your name, used in the author profile and the site footer
+description              : &description "石飏的学术主页"   # Update this with a general description of your site, this is the default if not overridden by a page
 url                      : https://page.su-do.cn # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -23,7 +23,7 @@ baseurl                  : "" # the subpath of your site, e.g. "/blog"
 author:
  # Biographic information
   avatar           : "1.png"
-  name             : "Yang Shi"
+  name             : "石飏"
   location         : "中国广州"
   employer         : "广东工业大学"
   email            : "sudo.shiyang@gmail.com" 

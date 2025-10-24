@@ -1,9 +1,13 @@
 ---
 permalink: /
+layout: home
 title: "Yang Shi 的学术主页"
-author_profile: true
+author_profile: false
 redirect_from: 
   - /about/
   - /about.html
 ---
-Yang Shi 目前就读于中国广州的广东工业大学，本科毕业预计于 2027 年完成。主要研究方向涵盖数据挖掘与深度学习，关注如何将智能算法应用于实际场景以解决复杂问题。
+
+## 开放合作
+
+欢迎就数据挖掘与深度学习相关课题进行交流，也欢迎分享竞赛或项目机会。可通过邮箱与我联系。

@@ -1,0 +1,194 @@
+---
+layout: default
+---
+
+{% include base_path %}
+{% assign home = site.data.home %}
+{% assign hero = home.hero | default: {} %}
+{% assign hero_name = hero.title | default: site.author.name | default: site.title %}
+
+<div id="main" role="main">
+  <div class="home-container">
+    <section id="about" class="home-hero">
+      <div class="home-hero__content">
+        {% if hero_name %}
+          <h1 class="home-hero__name">{{ hero_name }}</h1>
+        {% endif %}
+        {% if hero.role %}
+          <p class="home-hero__role">{{ hero.role }}</p>
+        {% elsif site.author.employer %}
+          <p class="home-hero__role">{{ site.author.employer }}</p>
+        {% endif %}
+        {% if hero.description %}
+          <p class="home-hero__description">{{ hero.description }}</p>
+        {% elsif page.excerpt %}
+          <p class="home-hero__description">{{ page.excerpt }}</p>
+        {% elsif site.description %}
+          <p class="home-hero__description">{{ site.description }}</p>
+        {% endif %}
+        {% if hero.interests %}
+          <ul class="home-hero__tags">
+            {% for interest in hero.interests %}
+              <li class="home-tag">
+                <span class="home-tag__bullet">•</span>
+                <span>{{ interest }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% if hero.links %}
+          <div class="home-hero__links">
+            {% for link in hero.links %}
+              {% assign link_url = link.url %}
+              {% assign link_href = '#' %}
+              {% if link_url %}
+                {% if link_url contains 'http' %}
+                  {% assign link_href = link_url %}
+                {% else %}
+                  {% assign link_href = link_url | relative_url %}
+                {% endif %}
+              {% endif %}
+              <a class="home-link" href="{{ link_href }}"{% if link.external or (link_url and link_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
+                {% if link.icon %}<i class="{{ link.icon }}" aria-hidden="true"></i>{% endif %}
+                <span>{{ link.text }}</span>
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if hero.cta and hero.cta.text and hero.cta.url %}
+          <div class="home-hero__cta">
+            {% assign cta_url = hero.cta.url %}
+            {% assign cta_href = '#' %}
+            {% if cta_url contains 'http' %}
+              {% assign cta_href = cta_url %}
+            {% else %}
+              {% assign cta_href = cta_url | relative_url %}
+            {% endif %}
+            <a class="home-link" href="{{ cta_href }}"{% if hero.cta.external or (cta_url and cta_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
+              {% if hero.cta.icon %}<i class="{{ hero.cta.icon }}" aria-hidden="true"></i>{% endif %}
+              <span>{{ hero.cta.text }}</span>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+      {% assign hero_photo = hero.photo | default: site.author.avatar %}
+      {% if hero_photo %}
+        <div class="home-hero__photo">
+          <img src="{{ hero_photo | relative_url }}" alt="{{ hero_name }}">
+        </div>
+      {% endif %}
+    </section>
+
+    {% if home.research.items %}
+      <section id="research" class="home-section">
+        <div class="home-section__header">
+          <h2 class="home-section__title">{{ home.research.title | default: "研究兴趣" }}</h2>
+          {% if home.research.subtitle %}
+            <span class="home-section__subtitle">{{ home.research.subtitle }}</span>
+          {% endif %}
+        </div>
+        <div class="home-card">
+          <ul class="home-list">
+            {% for item in home.research.items %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if home.news.items %}
+      <section id="news" class="home-section">
+        <div class="home-section__header">
+          <h2 class="home-section__title">{{ home.news.title | default: "最新动态" }}</h2>
+        </div>
+        <div class="home-card">
+          <ul class="news-list">
+            {% for item in home.news.items %}
+              <li class="news-item">
+                {% if item.date %}<span class="news-date">{{ item.date }}</span>{% endif %}
+                <span class="news-text">
+                  {% if item.url %}
+                    {% assign news_url = item.url %}
+                    {% assign news_href = '#' %}
+                    {% if news_url contains 'http' %}
+                      {% assign news_href = news_url %}
+                    {% else %}
+                      {% assign news_href = news_url | relative_url %}
+                    {% endif %}
+                    <a href="{{ news_href }}"{% if news_url and news_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ item.text }}</a>
+                  {% else %}
+                    {{ item.text }}
+                  {% endif %}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    {% endif %}
+
+    {% assign top_pubs = site.publications | sort: 'date' | reverse %}
+    {% assign top_pubs = top_pubs | slice: 0, 4 %}
+    {% if top_pubs and top_pubs.size > 0 %}
+      <section id="publications" class="home-section">
+        <div class="home-section__header">
+          <h2 class="home-section__title">{{ home.publications.title | default: "精选论文" }}</h2>
+          {% if home.publications.subtitle %}
+            <span class="home-section__subtitle">{{ home.publications.subtitle }}</span>
+          {% endif %}
+        </div>
+        <div class="pub-grid">
+          {% for pub in top_pubs %}
+            <article class="pub-card">
+              <div class="pub-meta">
+                {% if pub.venue %}<span>{{ pub.venue }}</span>{% endif %}
+                <span>{{ pub.date | date: "%Y" }}</span>
+              </div>
+              <h3 class="pub-title">
+                <a href="{{ pub.url | relative_url }}">{{ pub.title }}</a>
+              </h3>
+              {% if pub.excerpt %}
+                <p class="pub-excerpt">{{ pub.excerpt }}</p>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+        <div class="pub-more">
+          <a class="home-link" href="{{ "/publications/" | relative_url }}">查看全部论文</a>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if home.education.items %}
+      <section id="education" class="home-section">
+        <div class="home-section__header">
+          <h2 class="home-section__title">{{ home.education.title | default: "教育经历" }}</h2>
+        </div>
+        <ul class="education-list">
+          {% for edu in home.education.items %}
+            <li class="education-item">
+              <h3 class="education-title">{{ edu.school }}</h3>
+              {% if edu.degree or edu.period %}
+                <p class="education-meta">
+                  {% if edu.degree %}<span>{{ edu.degree }}</span>{% endif %}
+                  {% if edu.degree and edu.period %} · {% endif %}
+                  {% if edu.period %}<span>{{ edu.period }}</span>{% endif %}
+                </p>
+              {% endif %}
+              {% if edu.description %}
+                <p class="education-desc">{{ edu.description }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% if content and content != "" %}
+      <section id="more" class="home-section home-markdown page__content">
+        {{ content }}
+      </section>
+    {% endif %}
+  </div>
+</div>
