@@ -1,20 +1,20 @@
 ---
-title: "Teaching experience 2"
+title: "教学经历 2"
 collection: teaching
 type: "Workshop"
 permalink: /teaching/2015-spring-teaching-1
-venue: "University 1, Department"
+venue: "大学 1 · 某学院"
 date: 2015-01-01
-location: "City, Country"
+location: "城市, 国家"
 ---
 
-This is a description of a teaching experience. You can use markdown like any other post.
+这里是教学经历的简介示例。与其他文章相同，可以使用 Markdown 撰写全部内容。
 
-Heading 1
+一级标题
 ======
 
-Heading 2
+二级标题
 ======
 
-Heading 3
+三级标题
 ======

@@ -1,36 +1,36 @@
 ---
-title: "Archive Layout with Content"
+title: "带内容的归档布局"
 layout: archive
 permalink: /archive-layout-with-content/
 ---
 
-A variety of common markup showing how the theme styles them.
+下面展示主题对常见 Markdown 元素的样式效果。
 
-# Header one
+# 一级标题
 
-## Header two
+## 二级标题
 
-### Header three
+### 三级标题
 
-#### Header four
+#### 四级标题
 
-##### Header five
+##### 五级标题
 
-###### Header six
+###### 六级标题
 
-## Blockquotes
+## 引用
 
-Single line blockquote:
+单行引用：
 
-> Quotes are cool.
+> 引用可以让重点内容更醒目。
 
-## Tables
+## 表格
 
-| Entry            | Item   |                                                              |
+| 条目            | 项目   | 说明                                                         |
 | --------         | ------ | ------------------------------------------------------------ |
-| [John Doe](#)    | 2016   | Description of the item in the list                          |
-| [Jane Doe](#)    | 2019   | Description of the item in the list                          |
-| [Doe Doe](#)     | 2022   | Description of the item in the list                          |
+| [John Doe](#)    | 2016   | 列表条目的说明                                               |
+| [Jane Doe](#)    | 2019   | 列表条目的说明                                               |
+| [Doe Doe](#)     | 2022   | 列表条目的说明                                               |
 
 | Header1 | Header2 | Header3 |
 |:--------|:-------:|--------:|
@@ -42,104 +42,104 @@ Single line blockquote:
 |=============================|
 | Foot1   | Foot2   | Foot3   |
 
-## Definition Lists
+## 定义列表
 
-Definition List Title
-:   Definition list division.
+定义列表示例
+:   说明定义列表的条目。
 
 Startup
-:   A startup company or startup is a company or temporary organization designed to search for a repeatable and scalable business model.
+:   初创公司是一种为了寻找可重复、可扩展商业模式而设立的临时组织。
 
 #dowork
-:   Coined by Rob Dyrdek and his personal body guard Christopher "Big Black" Boykins, "Do Work" works as a self motivator, to motivating your friends.
+:   由 Rob Dyrdek 与搭档 Christopher "Big Black" Boykins 提出的自我激励口号。
 
 Do It Live
-:   I'll let Bill O'Reilly [explain](https://www.youtube.com/watch?v=O_HyZ5aW76c "We'll Do It Live") this one.
+:   相关背景可参见 [Bill O'Reilly 的视频](https://www.youtube.com/watch?v=O_HyZ5aW76c "We'll Do It Live")。
 
-## Unordered Lists (Nested)
+## 嵌套无序列表
 
-  * List item one 
-      * List item one 
-          * List item one
-          * List item two
-          * List item three
-          * List item four
-      * List item two
-      * List item three
-      * List item four
-  * List item two
-  * List item three
-  * List item four
+  * 列表项一 
+    * 子项一 
+      * 深层子项一
+      * 深层子项二
+      * 深层子项三
+      * 深层子项四
+    * 子项二
+    * 子项三
+    * 子项四
+  * 列表项二
+  * 列表项三
+  * 列表项四
 
-## Ordered List (Nested)
+## 嵌套有序列表
 
-  1. List item one 
-      1. List item one 
-          1. List item one
-          2. List item two
-          3. List item three
-          4. List item four
-      2. List item two
-      3. List item three
-      4. List item four
-  2. List item two
-  3. List item three
-  4. List item four
+  1. 列表项一 
+    1. 子项一 
+      1. 深层子项一
+      2. 深层子项二
+      3. 深层子项三
+      4. 深层子项四
+    2. 子项二
+    3. 子项三
+    4. 子项四
+  2. 列表项二
+  3. 列表项三
+  4. 列表项四
 
-## Buttons
+## 按钮
 
-Make any link standout more when applying the `.btn` class.
+给链接添加 `.btn` 类即可获得按钮样式。
 
-## Notices
+## 提示框
 
-**Watch out!** You can also add notices by appending `{: .notice}` to a paragraph.
+**请注意！** 可以在段落后添加 `{: .notice}` 创建提示框。
 {: .notice}
 
-## HTML Tags
+## HTML 标签
 
-### Address Tag
+### Address 标签
 
 <address>
   1 Infinite Loop<br /> Cupertino, CA 95014<br /> United States
 </address>
 
-### Anchor Tag (aka. Link)
+### Anchor 标签（链接）
 
-This is an example of a [link](http://github.com "GitHub").
+这是一个 [链接示例](http://github.com "GitHub").
 
-### Abbreviation Tag
+### Abbreviation 标签
 
-The abbreviation CSS stands for "Cascading Style Sheets".
+CSS 是 “Cascading Style Sheets” 的缩写。
 
 *[CSS]: Cascading Style Sheets
 
-### Cite Tag
+### Cite 标签
 
-"Code is poetry." ---<cite>Automattic</cite>
+“Code is poetry.” ---<cite>Automattic</cite>
 
-### Code Tag
+### Code 标签
 
-You will learn later on in these tests that `word-wrap: break-word;` will be your best friend.
+`word-wrap: break-word;` 可以避免长代码撑破布局。
 
-### Strike Tag
+### Strike 标签
 
-This tag will let you <strike>strikeout text</strike>.
+用于展示 <strike>删除线文字</strike>。
 
-### Emphasize Tag
+### Emphasize 标签
 
-The emphasize tag should _italicize_ text.
+用于显示 _斜体文字_。
 
-### Insert Tag
+### Insert 标签
 
-This tag should denote <ins>inserted</ins> text.
+用于展示 <ins>新增内容</ins>。
 
-### Keyboard Tag
+### Keyboard 标签
 
-This scarcely known tag emulates <kbd>keyboard text</kbd>, which is usually styled like the `<code>` tag.
+用于标识 <kbd>键盘输入</kbd>，样式类似 `<code>` 标签。
 
-### Preformatted Tag
+### Preformatted 标签
 
-This tag styles large blocks of code.
+用于展示预格式化的大段文本。
 
 <pre>
 .post-title {
@@ -151,25 +151,25 @@ This tag styles large blocks of code.
 }
 </pre>
 
-### Quote Tag
+### Quote 标签
 
-<q>Developers, developers, developers&#8230;</q> &#8211;Steve Ballmer
+<q>Developers, developers, developers&#8230;</q> ——Steve Ballmer
 
-### Strong Tag
+### Strong 标签
 
-This tag shows **bold text**.
+用于强调 **粗体文字**。
 
-### Subscript Tag
+### Subscript 标签
 
-Getting our science styling on with H<sub>2</sub>O, which should push the "2" down.
+H<sub>2</sub>O 中的 “2” 会被正确下沉。
 
-### Superscript Tag
+### Superscript 标签
 
-Still sticking with science and Isaac Newton's E = MC<sup>2</sup>, which should lift the 2 up.
+在 E = MC<sup>2</sup> 中，“2” 会显示为上标。
 
-### Variable Tag
+### Variable 标签
 
-This allows you to denote <var>variables</var>.
+用于表示 <var>变量</var>。
 
 {% include base_path %}
 {% for post in site.pages %}
