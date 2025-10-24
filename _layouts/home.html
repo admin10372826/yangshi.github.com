@@ -73,8 +73,16 @@ layout: default
       </div>
       {% assign hero_photo = hero.photo | default: site.author.avatar %}
       {% if hero_photo %}
+        {% assign hero_photo_src = hero_photo %}
+        {% if hero_photo contains '://' %}
+          {% assign hero_photo_src = hero_photo %}
+        {% elsif hero_photo | slice: 0, 1 == '/' %}
+          {% assign hero_photo_src = hero_photo | relative_url %}
+        {% else %}
+          {% assign hero_photo_src = hero_photo | prepend: '/images/' | relative_url %}
+        {% endif %}
         <div class="home-hero__photo">
-          <img src="{{ hero_photo | relative_url }}" alt="{{ hero_name }}">
+          <img src="{{ hero_photo_src }}" alt="{{ hero_name }}">
         </div>
       {% endif %}
     </section>
