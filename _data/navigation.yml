@@ -1,33 +1,36 @@
-# The following is the order of the links in the header of the website.
-#
-# Changing the order here will adjust the order and you can also add additional
-# links. Removing a link prevents it from showing in the header, but does not
-# prevent it from being included in the site.
-#
-# NOTE that only one of the CV options should be selected, the first is for the
-#      Markdown formatted page while the second is generated using JSON.
+# The following controls the header links shown on the site.
+# Adjusting the order here updates the navigation automatically.
 
 main:
+  - title: "主页"
+    url: "/#about-me"
+
+  - title: "关于我"
+    url: "/#about-me"
+
+  - title: "动态"
+    url: "/#news"
+
   - title: "论文"
-    url: /publications/
+    url: "/#publications"
+
+  - title: "荣誉"
+    url: "/#honors"
+
+  - title: "教育"
+    url: "/#educations"
 
   - title: "报告"
-    url: /talks/    
+    url: "/#talks"
 
-  - title: "教学"
-    url: /teaching/    
-    
-  - title: "项目"
-    url: /portfolio/
-        
-  - title: "博客"
-    url: /year-archive/
-    
+  - title: "实践"
+    url: "/#internships"
+
   - title: "简历"
     url: /cv/
-    
+
   # - title: "CV"
   #   url: /cv-json/
-    
+
   - title: "使用指南"
     url: /markdown/

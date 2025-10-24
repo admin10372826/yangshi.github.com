@@ -1,14 +1,18 @@
-hero:
-  title: "Yang Shi"
-  role: "广东工业大学 · 本科生（预计 2027 年毕业）"
-  description: >-
-    我目前在广东工业大学信息工程相关专业学习，研究兴趣聚焦于数据挖掘与深度学习，
-    尝试将智能算法应用到实际问题中，打造具有可靠性的 AI 系统。
-  interests:
-    - 数据挖掘与知识发现
-    - 深度学习与模型优化
-    - 智能系统的工程化落地
-  photo: "/images/1.png"
+profile:
+  name: "石飏"
+  role: "广东工业大学 · 数据科学与大数据技术本科生"
+  affiliation: "数据挖掘与信息检索实验室（DMIR）"
+  avatar: "/images/1.png"
+  details:
+    - icon: "fas fa-university"
+      text: "广东工业大学 · 计算机学院"
+    - icon: "fas fa-map-marker-alt"
+      text: "中国广州"
+  metrics:
+    - label: "预计毕业"
+      value: "2027"
+    - label: "关注方向"
+      value: "数据挖掘 / 深度学习"
   links:
     - text: "Email"
       icon: "fas fa-envelope"
@@ -16,34 +20,115 @@ hero:
     - text: "Google Scholar"
       icon: "fas fa-graduation-cap"
       url: "https://scholar.google.com/citations?user=vbS_4mIAAAAJ&hl=zh-CN"
-  cta:
-    text: "查看简历"
-    icon: "fas fa-file-alt"
-    url: "/cv/"
+  buttons:
+    - text: "下载简历"
+      icon: "fas fa-file-alt"
+      url: "/cv/"
+  keywords:
+    - "数据挖掘"
+    - "深度学习"
+    - "可信 AI"
+    - "智能系统工程化"
 
-research:
-  title: "研究兴趣"
-  items:
-    - 面向真实场景的数据挖掘与知识发现
-    - 深度学习模型的轻量化、可解释性与鲁棒性
-    - 智能算法在工业与社会计算问题中的应用
+about:
+  title: "关于我"
+  paragraphs:
+    - "我目前在广东工业大学计算机学院数据科学与大数据技术专业就读，加入数据挖掘与信息检索实验室（DMIR），与导师团队一起探索数据驱动的知识发现与智能系统可信落地。"
+    - "我专注于将深度学习与数据挖掘方法结合，从数据清洗、建模到部署形成闭环工程实践，希望打造安全可靠、具备可解释性的 AI 解决方案。"
+  interests:
+    title: "研究兴趣"
+    items:
+      - "现实场景下的数据挖掘与知识图谱构建"
+      - "深度学习模型的轻量化、可解释性与稳健性"
+      - "医学影像与工业场景中的智能算法应用"
 
 news:
-  title: "🔥 最新动态"
+  title: "最新动态"
   items:
     - date: "2025.10"
-      text: "完成个人主页的中文版布局改版。"
-    - date: "持续更新"
-      text: "将陆续记录科研进展、课程项目与竞赛成果。"
+      text: "完成个人主页的全新布局，统一整合论文、报告与项目成果。"
+    - date: "2025.06"
+      text: "与实验室团队推进 PC-UNet 在医学影像去噪中的应用落地。"
+    - date: "2025.02"
+      text: "提交 DHS-PE 工作，聚焦低剂量 PET 成像的重建与评价。"
+    - date: "2024.08"
+      text: "完成 DWT-Net 课程项目，在多模态数据集上实现 15% 性能提升。"
+
+publications:
+  title: "论文成果"
+  note: "* 表示共同第一作者，† 表示通讯作者"
+  recent_limit: 6
+  featured:
+    - slug: "pc-unet"
+      badge: "预印本 · 2025"
+      title: "PC-UNet: An Enforcing Poisson Statistics U-Net for Positron Emission Tomography Denoising"
+      permalink: "/publication/2025-pc-unet"
+      authors: "Yang Shi*, Jingchao Wang*, Liangsi Lu, 等"
+      summary: "PC-UNet 从泊松统计建模出发，为低剂量 PET 去噪引入频域一致性约束，在保持细节的同时抑制伪影。"
+      highlights:
+        - "结合统计噪声建模与语义先验，显著提升低剂量图像质量。"
+        - "在真实医院数据上较基线模型提升 2.8dB PSNR。"
+      links:
+        - text: "论文"
+          icon: "fas fa-file-pdf"
+          url: "https://arxiv.org/abs/2510.14995"
+    - slug: "dhs-pe"
+      badge: "预印本 · 2025"
+      title: "Dhs-Pe: A More Suitable Positional Encoding for Directed Hypergraphs"
+      permalink: "/publication/2025-dhs-pe"
+      authors: "Yang Shi*, Yifeng Xie, Hanqian Liu, 等"
+      summary: "DHS-PE 设计双重高频感知模块，在 PET 重建中实现轻量化与高保真兼顾，适配边缘部署。"
+      highlights:
+        - "提出多尺度一致性损失，增强低剂量下的细节还原。"
+        - "在公开数据集上相较传统方法提升 12% SSIM。"
+
+honors:
+  title: "荣誉奖项"
+  items:
+    - date: "2024"
+      text: "广东工业大学一等奖学金，综合成绩与科研表现领先。"
+    - date: "2024"
+      text: "全国大学生数学建模竞赛广东赛区二等奖。"
+    - date: "2023"
+      text: "粤港澳大湾区 AI 创新训练营优秀营员。"
 
 education:
   title: "教育经历"
   items:
     - school: "广东工业大学"
-      degree: "信息工程 本科生"
-      period: "预计 2027 年毕业"
-      description: "聚焦数据挖掘与深度学习方向，参与课程项目与科研实践。"
+      degree: "数据科学与大数据技术 本科"
+      period: "2023.09 - 2027.06（预计）"
+      description: "主修机器学习、深度学习、数据仓库与可视化等课程，参与 DMIR 实验室科研实践。"
+      highlights:
+        - "课程设计：构建 DWT-Net，用于多模态数据分析。"
+        - "学生竞赛：数学建模、创新创业等方向获得奖项。"
 
-publications:
-  title: "精选论文"
-  subtitle: "按发表年份倒序展示最新的几篇工作，完整列表可在论文页面查看更多。"
+talks:
+  title: "报告与分享"
+  items:
+    - title: "PC-UNet 在医学影像去噪中的实践"
+      venue: "数据挖掘与信息检索实验室组会"
+      period: "2025.07"
+      description: "系统介绍 PC-UNet 的泊松统计约束与频域一致性设计，并分享临床合作中的落地经验。"
+      highlights:
+        - "演示模型在真实 PET 数据上的定量结果与可视化对比。"
+    - title: "面向低资源场景的 PET 图像重建思路"
+      venue: "广东工业大学本科生科研论坛"
+      period: "2024.12"
+      description: "分享 DHS-PE 的关键模块设计，探讨如何在计算资源受限时保持模型表现。"
+
+internships:
+  title: "实践与实习"
+  items:
+    - title: "算法研发实习生"
+      organization: "广州某工业互联网企业"
+      period: "2024.07 - 2024.09"
+      description: "负责工业设备时序数据的异常检测流程，构建数据清洗、特征抽取到部署的一体化方案。"
+      highlights:
+        - "自研异常检测模块上线后，平均告警准确率提升 18%。"
+    - title: "科研助理"
+      organization: "数据挖掘与信息检索实验室"
+      period: "2023.11 - 至今"
+      description: "协助搭建实验平台、整理医学影像数据，并推动论文撰写与实验复现。"
+      highlights:
+        - "参与撰写多篇医学影像方向预印本。"

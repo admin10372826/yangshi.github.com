@@ -4,41 +4,59 @@ layout: default
 
 {% include base_path %}
 {% assign home = site.data.home %}
-{% assign hero = home.hero | default: {} %}
-{% assign hero_name = hero.title | default: site.author.name | default: site.title %}
+{% assign profile = home.profile | default: {} %}
 
 <div id="main" role="main">
-  <div class="home-container">
-    <section id="about" class="home-hero">
-      <div class="home-hero__content">
-        {% if hero_name %}
-          <h1 class="home-hero__name">{{ hero_name }}</h1>
+  <div class="home-shell">
+    <aside class="home-sidebar sticky">
+      <div class="profile-card" itemscope itemtype="http://schema.org/Person">
+        {% assign avatar = profile.avatar | default: site.author.avatar %}
+        {% if avatar %}
+          {% assign avatar_src = avatar %}
+          {% if avatar contains '://' %}
+            {% assign avatar_src = avatar %}
+          {% elsif avatar | slice: 0, 1 == '/' %}
+            {% assign avatar_src = avatar | relative_url %}
+          {% else %}
+            {% assign avatar_src = avatar | prepend: '/images/' | relative_url %}
+          {% endif %}
+          <div class="profile-avatar">
+            <img src="{{ avatar_src }}" alt="{{ profile.name | default: site.author.name | default: site.title }}">
+          </div>
         {% endif %}
-        {% if hero.role %}
-          <p class="home-hero__role">{{ hero.role }}</p>
-        {% elsif site.author.employer %}
-          <p class="home-hero__role">{{ site.author.employer }}</p>
+        {% assign profile_name = profile.name | default: site.author.name | default: site.title %}
+        {% if profile_name %}
+          <h1 class="profile-name" itemprop="name">{{ profile_name }}</h1>
         {% endif %}
-        {% if hero.description %}
-          <p class="home-hero__description">{{ hero.description }}</p>
-        {% elsif page.excerpt %}
-          <p class="home-hero__description">{{ page.excerpt }}</p>
-        {% elsif site.description %}
-          <p class="home-hero__description">{{ site.description }}</p>
+        {% if profile.role %}
+          <p class="profile-role">{{ profile.role }}</p>
         {% endif %}
-        {% if hero.interests %}
-          <ul class="home-hero__tags">
-            {% for interest in hero.interests %}
-              <li class="home-tag">
-                <span class="home-tag__bullet">•</span>
-                <span>{{ interest }}</span>
+        {% if profile.affiliation %}
+          <p class="profile-affiliation">{{ profile.affiliation }}</p>
+        {% endif %}
+        {% if profile.details %}
+          <ul class="profile-details">
+            {% for detail in profile.details %}
+              <li>
+                {% if detail.icon %}<i class="{{ detail.icon }}" aria-hidden="true"></i>{% endif %}
+                <span>{{ detail.text }}</span>
               </li>
             {% endfor %}
           </ul>
         {% endif %}
-        {% if hero.links %}
-          <div class="home-hero__links">
-            {% for link in hero.links %}
+        {% if profile.metrics %}
+          <ul class="profile-metrics">
+            {% for metric in profile.metrics %}
+              <li>
+                <span class="metric-value">{{ metric.value }}</span>
+                <span class="metric-label">{{ metric.label }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% if profile.links %}
+          <div class="profile-links">
+            {% for link in profile.links %}
               {% assign link_url = link.url %}
               {% assign link_href = '#' %}
               {% if link_url %}
@@ -48,83 +66,87 @@ layout: default
                   {% assign link_href = link_url | relative_url %}
                 {% endif %}
               {% endif %}
-              <a class="home-link" href="{{ link_href }}"{% if link.external or (link_url and link_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
+              <a class="profile-link" href="{{ link_href }}"{% if link.external or (link_url and link_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
                 {% if link.icon %}<i class="{{ link.icon }}" aria-hidden="true"></i>{% endif %}
                 <span>{{ link.text }}</span>
               </a>
             {% endfor %}
           </div>
         {% endif %}
-        {% if hero.cta and hero.cta.text and hero.cta.url %}
-          <div class="home-hero__cta">
-            {% assign cta_url = hero.cta.url %}
-            {% assign cta_href = '#' %}
-            {% if cta_url contains 'http' %}
-              {% assign cta_href = cta_url %}
-            {% else %}
-              {% assign cta_href = cta_url | relative_url %}
-            {% endif %}
-            <a class="home-link" href="{{ cta_href }}"{% if hero.cta.external or (cta_url and cta_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
-              {% if hero.cta.icon %}<i class="{{ hero.cta.icon }}" aria-hidden="true"></i>{% endif %}
-              <span>{{ hero.cta.text }}</span>
-            </a>
+        {% if profile.buttons %}
+          <div class="profile-buttons">
+            {% for button in profile.buttons %}
+              {% assign button_url = button.url %}
+              {% assign button_href = '#' %}
+              {% if button_url %}
+                {% if button_url contains 'http' %}
+                  {% assign button_href = button_url %}
+                {% else %}
+                  {% assign button_href = button_url | relative_url %}
+                {% endif %}
+              {% endif %}
+              <a class="profile-button" href="{{ button_href }}"{% if button.external or (button_url and button_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
+                {% if button.icon %}<i class="{{ button.icon }}" aria-hidden="true"></i>{% endif %}
+                <span>{{ button.text }}</span>
+              </a>
+            {% endfor %}
           </div>
         {% endif %}
-      </div>
-      {% assign hero_photo = hero.photo | default: site.author.avatar %}
-      {% if hero_photo %}
-        {% assign hero_photo_src = hero_photo %}
-        {% if hero_photo contains '://' %}
-          {% assign hero_photo_src = hero_photo %}
-        {% elsif hero_photo | slice: 0, 1 == '/' %}
-          {% assign hero_photo_src = hero_photo | relative_url %}
-        {% else %}
-          {% assign hero_photo_src = hero_photo | prepend: '/images/' | relative_url %}
-        {% endif %}
-        <div class="home-hero__photo">
-          <img src="{{ hero_photo_src }}" alt="{{ hero_name }}">
-        </div>
-      {% endif %}
-    </section>
-
-    {% if home.research.items %}
-      <section id="research" class="home-section">
-        <div class="home-section__header">
-          <h2 class="home-section__title">{{ home.research.title | default: "研究兴趣" }}</h2>
-          {% if home.research.subtitle %}
-            <span class="home-section__subtitle">{{ home.research.subtitle }}</span>
-          {% endif %}
-        </div>
-        <div class="home-card">
-          <ul class="home-list">
-            {% for item in home.research.items %}
-              <li>{{ item }}</li>
+        {% if profile.keywords %}
+          <ul class="profile-keywords">
+            {% for keyword in profile.keywords %}
+              <li>{{ keyword }}</li>
             {% endfor %}
           </ul>
-        </div>
-      </section>
-    {% endif %}
+        {% endif %}
+      </div>
+    </aside>
 
-    {% if home.news.items %}
-      <section id="news" class="home-section">
-        <div class="home-section__header">
-          <h2 class="home-section__title">{{ home.news.title | default: "最新动态" }}</h2>
-        </div>
-        <div class="home-card">
+    <div class="home-content" itemprop="text">
+      {% assign about = home.about | default: {} %}
+      {% if about.title or about.paragraphs %}
+        <section class="home-section">
+          <span class="anchor" id="about-me"></span>
+          <h1>{{ about.title | default: "About Me" }}</h1>
+          {% if about.paragraphs %}
+            {% for paragraph in about.paragraphs %}
+              <p>{{ paragraph }}</p>
+            {% endfor %}
+          {% endif %}
+          {% if about.interests and about.interests.items %}
+            {% if about.interests.title %}
+              <h2 class="home-section__subtitle">{{ about.interests.title }}</h2>
+            {% endif %}
+            <ul class="interest-list">
+              {% for interest in about.interests.items %}
+                <li>{{ interest }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+      {% endif %}
+
+      {% assign news = home.news | default: {} %}
+      {% if news.items %}
+        <section class="home-section">
+          <span class="anchor" id="news"></span>
+          <h1>{{ news.title | default: "News" }}</h1>
           <ul class="news-list">
-            {% for item in home.news.items %}
+            {% for item in news.items %}
               <li class="news-item">
-                {% if item.date %}<span class="news-date">{{ item.date }}</span>{% endif %}
+                {% if item.date %}
+                  <span class="news-date"><em>{{ item.date }}</em></span>
+                {% endif %}
                 <span class="news-text">
                   {% if item.url %}
-                    {% assign news_url = item.url %}
-                    {% assign news_href = '#' %}
-                    {% if news_url contains 'http' %}
-                      {% assign news_href = news_url %}
+                    {% assign item_url = item.url %}
+                    {% assign item_href = '#' %}
+                    {% if item_url contains 'http' %}
+                      {% assign item_href = item_url %}
                     {% else %}
-                      {% assign news_href = news_url | relative_url %}
+                      {% assign item_href = item_url | relative_url %}
                     {% endif %}
-                    <a href="{{ news_href }}"{% if news_url and news_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ item.text }}</a>
+                    <a href="{{ item_href }}"{% if item_url and item_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ item.text }}</a>
                   {% else %}
                     {{ item.text }}
                   {% endif %}
@@ -132,71 +154,313 @@ layout: default
               </li>
             {% endfor %}
           </ul>
-        </div>
-      </section>
-    {% endif %}
+        </section>
+      {% endif %}
 
-    {% assign top_pubs = site.publications | sort: 'date' | reverse %}
-    {% assign top_pubs = top_pubs | slice: 0, 4 %}
-    {% if top_pubs and top_pubs.size > 0 %}
-      <section id="publications" class="home-section">
-        <div class="home-section__header">
-          <h2 class="home-section__title">{{ home.publications.title | default: "精选论文" }}</h2>
-          {% if home.publications.subtitle %}
-            <span class="home-section__subtitle">{{ home.publications.subtitle }}</span>
+      {% assign publications = home.publications | default: {} %}
+      {% assign all_publications = site.publications | sort: 'date' | reverse %}
+      {% if publications.featured or all_publications %}
+        <section class="home-section">
+          <span class="anchor" id="publications"></span>
+          <h1>{{ publications.title | default: "Publications" }}</h1>
+          {% if publications.note %}
+            <p class="section-note">{{ publications.note }}</p>
           {% endif %}
-        </div>
-        <div class="pub-grid">
-          {% for pub in top_pubs %}
-            <article class="pub-card">
-              <div class="pub-meta">
-                {% if pub.venue %}<span>{{ pub.venue }}</span>{% endif %}
-                <span>{{ pub.date | date: "%Y" }}</span>
-              </div>
-              <h3 class="pub-title">
-                <a href="{{ pub.url | relative_url }}">{{ pub.title }}</a>
-              </h3>
-              {% if pub.excerpt %}
-                <p class="pub-excerpt">{{ pub.excerpt }}</p>
-              {% endif %}
-            </article>
-          {% endfor %}
-        </div>
-        <div class="pub-more">
-          <a class="home-link" href="{{ "/publications/" | relative_url }}">查看全部论文</a>
-        </div>
-      </section>
-    {% endif %}
+          {% assign featured_entries = publications.featured | default: [] %}
+          {% if featured_entries and featured_entries.size > 0 %}
+            <div class="paper-grid">
+              {% for entry in featured_entries %}
+                {% assign pub = nil %}
+                {% if entry.slug %}
+                  {% assign pub = site.publications | where: "slug", entry.slug | first %}
+                {% endif %}
+                {% if pub == nil and entry.permalink %}
+                  {% assign pub = site.publications | where: "permalink", entry.permalink | first %}
+                {% endif %}
+                {% if pub == nil and entry.title %}
+                  {% assign pub = site.publications | where: "title", entry.title | first %}
+                {% endif %}
+                {% assign pub_title = pub.title | default: entry.title %}
+                {% assign raw_url = entry.link | default: pub.paperurl | default: pub.url %}
+                {% assign pub_href = '#' %}
+                {% if raw_url %}
+                  {% if raw_url contains 'http' %}
+                    {% assign pub_href = raw_url %}
+                  {% else %}
+                    {% assign pub_href = raw_url | relative_url %}
+                  {% endif %}
+                {% endif %}
+                <article class="paper-box">
+                  {% if entry.image %}
+                    {% assign image_src = entry.image %}
+                    {% if image_src contains '://' %}
+                      {% assign image_src = entry.image %}
+                    {% elsif image_src | slice: 0, 1 == '/' %}
+                      {% assign image_src = image_src | relative_url %}
+                    {% else %}
+                      {% assign image_src = image_src | prepend: '/images/' | relative_url %}
+                    {% endif %}
+                    <div class="paper-box-image">
+                      <img src="{{ image_src }}" alt="{{ pub_title }}">
+                    </div>
+                  {% endif %}
+                  <div class="paper-box-text">
+                    {% if entry.badge %}
+                      <span class="paper-badge">{{ entry.badge }}</span>
+                    {% elsif pub.venue %}
+                      <span class="paper-badge">{{ pub.venue }}</span>
+                    {% endif %}
+                    {% if pub_title %}
+                      <p class="paper-title">
+                        <a href="{{ pub_href }}"{% if raw_url and raw_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ pub_title }}</a>
+                      </p>
+                    {% endif %}
+                    {% if entry.authors %}
+                      <p class="paper-authors">{{ entry.authors }}</p>
+                    {% elsif pub.citation %}
+                      <p class="paper-authors">{{ pub.citation }}</p>
+                    {% endif %}
+                    {% if entry.summary %}
+                      <p class="paper-summary">{{ entry.summary }}</p>
+                    {% elsif pub.excerpt %}
+                      <p class="paper-summary">{{ pub.excerpt }}</p>
+                    {% endif %}
+                    {% if entry.highlights %}
+                      <ul class="paper-highlights">
+                        {% for highlight in entry.highlights %}
+                          <li>{{ highlight }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                    {% if entry.links %}
+                      <div class="paper-links">
+                        {% for link in entry.links %}
+                          {% assign link_url = link.url %}
+                          {% assign link_href = '#' %}
+                          {% if link_url %}
+                            {% if link_url contains 'http' %}
+                              {% assign link_href = link_url %}
+                            {% else %}
+                              {% assign link_href = link_url | relative_url %}
+                            {% endif %}
+                          {% endif %}
+                          <a class="paper-link" href="{{ link_href }}"{% if link.external or (link_url and link_url contains 'http') %} target="_blank" rel="noopener"{% endif %}>
+                            {% if link.icon %}<i class="{{ link.icon }}" aria-hidden="true"></i>{% endif %}
+                            <span>{{ link.text }}</span>
+                          </a>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </article>
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% assign featured_slugs = featured_entries | map: 'slug' %}
+          {% assign featured_titles = featured_entries | map: 'title' %}
+          {% assign featured_permalinks = featured_entries | map: 'permalink' %}
+          {% assign more_limit = publications.recent_limit | default: 6 %}
+          {% if all_publications and all_publications.size > 0 %}
+            <ul class="pub-list">
+              {% assign counter = 0 %}
+              {% for pub in all_publications %}
+                {% assign skip_entry = false %}
+                {% if featured_slugs contains pub.slug %}
+                  {% assign skip_entry = true %}
+                {% endif %}
+                {% if skip_entry == false and featured_titles contains pub.title %}
+                  {% assign skip_entry = true %}
+                {% endif %}
+                {% if skip_entry == false and featured_permalinks contains pub.permalink %}
+                  {% assign skip_entry = true %}
+                {% endif %}
+                {% if skip_entry == false and featured_permalinks contains pub.url %}
+                  {% assign skip_entry = true %}
+                {% endif %}
+                {% if skip_entry %}
+                  {% continue %}
+                {% endif %}
+                {% if counter >= more_limit %}
+                  {% break %}
+                {% endif %}
+                {% assign counter = counter | plus: 1 %}
+                {% assign pub_link = pub.paperurl | default: pub.url %}
+                {% assign pub_href = '#' %}
+                {% if pub_link %}
+                  {% if pub_link contains 'http' %}
+                    {% assign pub_href = pub_link %}
+                  {% else %}
+                    {% assign pub_href = pub_link | relative_url %}
+                  {% endif %}
+                {% endif %}
+                <li>
+                  <span class="pub-year">{{ pub.date | date: "%Y.%m" }}</span>
+                  <span class="pub-text">
+                    {% if pub.title %}
+                      <a href="{{ pub_href }}"{% if pub_link and pub_link contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ pub.title }}</a>
+                    {% endif %}
+                    {% if pub.venue %}
+                      <span class="pub-venue">({{ pub.venue }})</span>
+                    {% endif %}
+                  </span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </section>
+      {% endif %}
 
-    {% if home.education.items %}
-      <section id="education" class="home-section">
-        <div class="home-section__header">
-          <h2 class="home-section__title">{{ home.education.title | default: "教育经历" }}</h2>
-        </div>
-        <ul class="education-list">
-          {% for edu in home.education.items %}
-            <li class="education-item">
-              <h3 class="education-title">{{ edu.school }}</h3>
-              {% if edu.degree or edu.period %}
-                <p class="education-meta">
-                  {% if edu.degree %}<span>{{ edu.degree }}</span>{% endif %}
-                  {% if edu.degree and edu.period %} · {% endif %}
-                  {% if edu.period %}<span>{{ edu.period }}</span>{% endif %}
-                </p>
-              {% endif %}
-              {% if edu.description %}
-                <p class="education-desc">{{ edu.description }}</p>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      </section>
-    {% endif %}
+      {% assign honors = home.honors | default: {} %}
+      {% if honors.items %}
+        <section class="home-section">
+          <span class="anchor" id="honors"></span>
+          <h1>{{ honors.title | default: "Honors & Awards" }}</h1>
+          <ul class="timeline-list">
+            {% for item in honors.items %}
+              <li>
+                {% if item.date %}
+                  <span class="timeline-date">{{ item.date }}</span>
+                {% endif %}
+                <span class="timeline-text">{{ item.text }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
 
-    {% if content and content != "" %}
-      <section id="more" class="home-section home-markdown page__content">
-        {{ content }}
-      </section>
-    {% endif %}
+      {% assign education = home.education | default: {} %}
+      {% if education.items %}
+        <section class="home-section">
+          <span class="anchor" id="educations"></span>
+          <h1>{{ education.title | default: "Education" }}</h1>
+          <div class="education-grid">
+            {% for edu in education.items %}
+              <article class="education-card">
+                {% if edu.school %}
+                  <h3 class="education-heading">{{ edu.school }}</h3>
+                {% endif %}
+                {% if edu.degree or edu.period %}
+                  <p class="education-meta">
+                    {% if edu.degree %}<span>{{ edu.degree }}</span>{% endif %}
+                    {% if edu.degree and edu.period %} · {% endif %}
+                    {% if edu.period %}<span>{{ edu.period }}</span>{% endif %}
+                  </p>
+                {% endif %}
+                {% if edu.description %}
+                  <p class="education-desc">{{ edu.description }}</p>
+                {% endif %}
+                {% if edu.highlights %}
+                  <ul class="experience-highlights">
+                    {% for highlight in edu.highlights %}
+                      <li>{{ highlight }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% assign talks = home.talks | default: {} %}
+      {% if talks.items %}
+        <section class="home-section">
+          <span class="anchor" id="talks"></span>
+          <h1>{{ talks.title | default: "Talks" }}</h1>
+          <ul class="experience-list">
+            {% for talk in talks.items %}
+              <li class="experience-item">
+                {% if talk.title %}
+                  {% assign talk_url = talk.url %}
+                  {% assign talk_href = '#' %}
+                  {% if talk_url %}
+                    {% if talk_url contains 'http' %}
+                      {% assign talk_href = talk_url %}
+                    {% else %}
+                      {% assign talk_href = talk_url | relative_url %}
+                    {% endif %}
+                  {% endif %}
+                  {% if talk_url %}
+                    <h3 class="experience-title"><a href="{{ talk_href }}"{% if talk_url and talk_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ talk.title }}</a></h3>
+                  {% else %}
+                    <h3 class="experience-title">{{ talk.title }}</h3>
+                  {% endif %}
+                {% endif %}
+                {% if talk.venue or talk.period %}
+                  <p class="experience-meta">
+                    {% if talk.venue %}<span>{{ talk.venue }}</span>{% endif %}
+                    {% if talk.venue and talk.period %} · {% endif %}
+                    {% if talk.period %}<span>{{ talk.period }}</span>{% endif %}
+                  </p>
+                {% endif %}
+                {% if talk.description %}
+                  <p class="experience-desc">{{ talk.description }}</p>
+                {% endif %}
+                {% if talk.highlights %}
+                  <ul class="experience-highlights">
+                    {% for highlight in talk.highlights %}
+                      <li>{{ highlight }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% assign internships = home.internships | default: {} %}
+      {% if internships.items %}
+        <section class="home-section">
+          <span class="anchor" id="internships"></span>
+          <h1>{{ internships.title | default: "Internships" }}</h1>
+          <ul class="experience-list">
+            {% for internship in internships.items %}
+              <li class="experience-item">
+                {% if internship.title %}
+                  {% assign internship_url = internship.url %}
+                  {% assign internship_href = '#' %}
+                  {% if internship_url %}
+                    {% if internship_url contains 'http' %}
+                      {% assign internship_href = internship_url %}
+                    {% else %}
+                      {% assign internship_href = internship_url | relative_url %}
+                    {% endif %}
+                  {% endif %}
+                  {% if internship_url %}
+                    <h3 class="experience-title"><a href="{{ internship_href }}"{% if internship_url and internship_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>{{ internship.title }}</a></h3>
+                  {% else %}
+                    <h3 class="experience-title">{{ internship.title }}</h3>
+                  {% endif %}
+                {% endif %}
+                {% if internship.organization or internship.period %}
+                  <p class="experience-meta">
+                    {% if internship.organization %}<span>{{ internship.organization }}</span>{% endif %}
+                    {% if internship.organization and internship.period %} · {% endif %}
+                    {% if internship.period %}<span>{{ internship.period }}</span>{% endif %}
+                  </p>
+                {% endif %}
+                {% if internship.description %}
+                  <p class="experience-desc">{{ internship.description }}</p>
+                {% endif %}
+                {% if internship.highlights %}
+                  <ul class="experience-highlights">
+                    {% for highlight in internship.highlights %}
+                      <li>{{ highlight }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if content and content != "" %}
+        <section class="home-section home-markdown page__content">
+          {{ content }}
+        </section>
+      {% endif %}
+    </div>
   </div>
 </div>
